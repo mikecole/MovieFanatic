@@ -17,5 +17,6 @@ namespace MovieFanatic.Domain
         public string Title { get; private set; }
         public int ApiId { get; private set; }
         public DateTime ReleaseDate { get; private set; }
+        public string Overview { get; set; }
     }
 }
