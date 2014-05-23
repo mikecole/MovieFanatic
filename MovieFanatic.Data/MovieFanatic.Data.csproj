@@ -51,6 +51,10 @@
     <Compile Include="Migrations\201405220245167_CreateMovie.Designer.cs">
       <DependentUpon>201405220245167_CreateMovie.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201405230129030_AddedMoreFieldsToMovie.cs" />
+    <Compile Include="Migrations\201405230129030_AddedMoreFieldsToMovie.Designer.cs">
+      <DependentUpon>201405230129030_AddedMoreFieldsToMovie.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -66,6 +70,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201405220245167_CreateMovie.resx">
       <DependentUpon>201405220245167_CreateMovie.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201405230129030_AddedMoreFieldsToMovie.resx">
+      <DependentUpon>201405230129030_AddedMoreFieldsToMovie.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

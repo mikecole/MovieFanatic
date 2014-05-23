@@ -1,8 +1,8 @@
 ﻿using System.Linq;
 using System.Net;
 using System.Web.Mvc;
+using EntityFramework.Extensions;
 using MovieFanatic.Data;
-using MovieFanatic.Domain;
 using WebGrease.Css.Extensions;
 
 namespace MovieFanatic.Web.Controllers
@@ -11,10 +11,12 @@ namespace MovieFanatic.Web.Controllers
     {
         public ActionResult Refresh()
         {
+            var movies = MovieLoader.LoadMovies();
+
             using (var context = new DataContext())
             {
-                context.Movies.ToArray().ForEach(movie => context.Movies.Remove(movie));
-                context.Movies.Add(new Movie("test"));
+                context.Movies.Delete();
+                movies.ForEach(movie => context.Movies.Add(movie));
                 context.SaveChanges();
             }
 
