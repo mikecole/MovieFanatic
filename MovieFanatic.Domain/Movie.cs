@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace MovieFanatic.Domain
 {
@@ -11,12 +13,16 @@ namespace MovieFanatic.Domain
             ApiId = apiId;
             ReleaseDate = releaseDate;
         }
-
-        private Movie() { }
+        private Movie()
+        {
+            MovieGenres = new Collection<MovieGenre>();
+        }
 
         public string Title { get; private set; }
         public int ApiId { get; private set; }
         public DateTime ReleaseDate { get; private set; }
         public string Overview { get; set; }
+
+        public virtual ICollection<MovieGenre> MovieGenres { get; private set; }
     }
 }

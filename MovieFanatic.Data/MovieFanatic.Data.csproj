@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configurations\GenreConfiguration.cs" />
     <Compile Include="Configurations\MovieConfiguration.cs" />
     <Compile Include="DataContext.cs" />
     <Compile Include="Migrations\201405220245167_CreateMovie.cs" />
@@ -63,6 +64,14 @@
     <Compile Include="Migrations\201405230426383_AddMovieOverview.cs" />
     <Compile Include="Migrations\201405230426383_AddMovieOverview.Designer.cs">
       <DependentUpon>201405230426383_AddMovieOverview.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201405231249261_AddingGenre.cs" />
+    <Compile Include="Migrations\201405231249261_AddingGenre.Designer.cs">
+      <DependentUpon>201405231249261_AddingGenre.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201405240107018_FixedMovieGenres.cs" />
+    <Compile Include="Migrations\201405240107018_FixedMovieGenres.Designer.cs">
+      <DependentUpon>201405240107018_FixedMovieGenres.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -88,6 +97,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201405230426383_AddMovieOverview.resx">
       <DependentUpon>201405230426383_AddMovieOverview.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201405231249261_AddingGenre.resx">
+      <DependentUpon>201405231249261_AddingGenre.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201405240107018_FixedMovieGenres.resx">
+      <DependentUpon>201405240107018_FixedMovieGenres.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

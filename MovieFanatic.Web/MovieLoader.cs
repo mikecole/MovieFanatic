@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
+using System.Linq;
 using System.Net;
+using MovieFanatic.Domain;
 using Newtonsoft.Json;
 
 namespace MovieFanatic.Web
@@ -10,6 +12,8 @@ namespace MovieFanatic.Web
     //This class is ugly, but it's not really the point...
     public class MovieLoader
     {
+        private static IList<Domain.Genre> _genres = new List<Domain.Genre>();
+
         public static IEnumerable<Domain.Movie> LoadMovies()
         {
             var result = new List<Domain.Movie>();
@@ -60,7 +64,21 @@ namespace MovieFanatic.Web
 
                 var detail = JsonConvert.DeserializeObject<RootMovieDetail>(responseContent);
 
-                movies.Add(new Domain.Movie(detail.title, detail.id, DateTime.Parse(detail.release_date)) { Overview = detail.overview });
+                var movie = new Domain.Movie(detail.title, detail.id, DateTime.Parse(detail.release_date)) { Overview = detail.overview };
+                foreach (var genre in detail.genres)
+                {
+                    var selectedGenre = _genres.SingleOrDefault(gen => gen.Name == genre.name);
+
+                    if (selectedGenre == null)
+                    {
+                        selectedGenre = new Domain.Genre(genre.name);
+                        _genres.Add(selectedGenre);
+                    }
+
+                    movie.MovieGenres.Add(new MovieGenre(movie, selectedGenre));
+                }
+
+                movies.Add(movie);
             }
 
             return movies;

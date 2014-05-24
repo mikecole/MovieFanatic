@@ -10,11 +10,13 @@ namespace MovieFanatic.Data
             : base("MovieFanatic") { }
 
         public DbSet<Movie> Movies { get; set; }
+        public DbSet<Genre> Genres { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.Configurations.Add(new MovieConfiguration());
+            modelBuilder.Configurations.Add(new GenreConfiguration());
         }
     }
 }
