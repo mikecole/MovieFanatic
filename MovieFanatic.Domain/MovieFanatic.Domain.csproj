@@ -39,6 +39,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Actor.cs" />
+    <Compile Include="Character.cs" />
     <Compile Include="EntityBase.cs" />
     <Compile Include="Genre.cs" />
     <Compile Include="Movie.cs" />

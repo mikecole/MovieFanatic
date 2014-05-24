@@ -49,6 +49,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configurations\ActorConfiguration.cs" />
+    <Compile Include="Configurations\CharacterConfiguration.cs" />
     <Compile Include="Configurations\GenreConfiguration.cs" />
     <Compile Include="Configurations\MovieConfiguration.cs" />
     <Compile Include="Configurations\ProductionCompanyConfiguration.cs" />
@@ -89,6 +91,22 @@
     <Compile Include="Migrations\201405240225292_WidenedProductionCompanyName.Designer.cs">
       <DependentUpon>201405240225292_WidenedProductionCompanyName.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201405240259236_AddedCharactersAndActors.cs" />
+    <Compile Include="Migrations\201405240259236_AddedCharactersAndActors.Designer.cs">
+      <DependentUpon>201405240259236_AddedCharactersAndActors.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201405240336591_WidenedCharacterName.cs" />
+    <Compile Include="Migrations\201405240336591_WidenedCharacterName.Designer.cs">
+      <DependentUpon>201405240336591_WidenedCharacterName.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201405240418417_WidenedCharacterNameAgain.cs" />
+    <Compile Include="Migrations\201405240418417_WidenedCharacterNameAgain.Designer.cs">
+      <DependentUpon>201405240418417_WidenedCharacterNameAgain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201405240446252_WidenedCharacterNameAgain2.cs" />
+    <Compile Include="Migrations\201405240446252_WidenedCharacterNameAgain2.Designer.cs">
+      <DependentUpon>201405240446252_WidenedCharacterNameAgain2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -128,6 +146,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201405240225292_WidenedProductionCompanyName.resx">
       <DependentUpon>201405240225292_WidenedProductionCompanyName.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201405240259236_AddedCharactersAndActors.resx">
+      <DependentUpon>201405240259236_AddedCharactersAndActors.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201405240336591_WidenedCharacterName.resx">
+      <DependentUpon>201405240336591_WidenedCharacterName.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201405240418417_WidenedCharacterNameAgain.resx">
+      <DependentUpon>201405240418417_WidenedCharacterNameAgain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201405240446252_WidenedCharacterNameAgain2.resx">
+      <DependentUpon>201405240446252_WidenedCharacterNameAgain2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

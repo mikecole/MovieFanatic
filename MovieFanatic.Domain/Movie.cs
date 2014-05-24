@@ -17,6 +17,7 @@ namespace MovieFanatic.Domain
         {
             MovieGenres = new Collection<MovieGenre>();
             ProductionCompanyMovies = new Collection<ProductionCompanyMovie>();
+            Characters = new Collection<Character>();
         }
 
         public string Title { get; private set; }
@@ -26,5 +27,6 @@ namespace MovieFanatic.Domain
 
         public virtual ICollection<MovieGenre> MovieGenres { get; private set; }
         public virtual ICollection<ProductionCompanyMovie> ProductionCompanyMovies { get; private set; }
+        public virtual ICollection<Character> Characters { get; set; }
     }
 }

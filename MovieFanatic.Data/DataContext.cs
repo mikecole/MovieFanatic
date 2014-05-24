@@ -2,6 +2,7 @@
 using System.Data.Entity;
 using System.Data.Entity.Validation;
 using System.Linq;
+using System.Runtime.InteropServices;
 using Elmah;
 using MovieFanatic.Data.Configurations;
 using MovieFanatic.Domain;
@@ -18,6 +19,8 @@ namespace MovieFanatic.Data
         public DbSet<ProductionCompany> ProductionCompanies { get; set; }
         public DbSet<MovieGenre> MovieGenres { get; set; }
         public DbSet<ProductionCompanyMovie> ProductionCompanyMovies { get; set; }
+        public DbSet<Character> Characters { get; set; }
+        public DbSet<Actor> Actors { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -25,6 +28,8 @@ namespace MovieFanatic.Data
             modelBuilder.Configurations.Add(new MovieConfiguration());
             modelBuilder.Configurations.Add(new GenreConfiguration());
             modelBuilder.Configurations.Add(new ProductionCompanyConfiguration());
+            modelBuilder.Configurations.Add(new CharacterConfiguration());
+            modelBuilder.Configurations.Add(new ActorConfiguration());
         }
 
         public override int SaveChanges()
@@ -35,9 +40,12 @@ namespace MovieFanatic.Data
             }
             catch (DbEntityValidationException ex)
             {
-                foreach (var item in ex.EntityValidationErrors.SelectMany(error => error.ValidationErrors))
+                foreach (var entity in ex.EntityValidationErrors)
                 {
-                    ErrorSignal.FromCurrentContext().Raise(new Exception(String.Format("Validation Error :: {0} - {1}", item.PropertyName, item.ErrorMessage)));
+                    foreach (var item in entity.ValidationErrors)
+                    {
+                        ErrorSignal.FromCurrentContext().Raise(new Exception(String.Format("Validation Error :: {0}.{1} - {2}. Attempted to save {3}.", entity.Entry.Entity, item.PropertyName, item.ErrorMessage, entity.Entry.CurrentValues)));
+                    }
                 }
 
                 throw;

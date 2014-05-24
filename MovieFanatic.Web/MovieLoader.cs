@@ -14,6 +14,7 @@ namespace MovieFanatic.Web
     {
         private static readonly IList<Domain.Genre> _genres = new List<Domain.Genre>();
         private static readonly IList<Domain.ProductionCompany> _productionCompanies = new List<Domain.ProductionCompany>();
+        private static readonly IList<Domain.Actor> _actors = new List<Domain.Actor>();
 
         public static IEnumerable<Domain.Movie> LoadMovies()
         {
@@ -90,6 +91,34 @@ namespace MovieFanatic.Web
                     }
 
                     movie.ProductionCompanyMovies.Add(new ProductionCompanyMovie(selectedCompany, movie));
+                }
+
+                request = (HttpWebRequest)WebRequest.Create(String.Format("http://api.themoviedb.org/3/movie/{1}/credits?api_key={0}", apiKey, result.id));
+                request.KeepAlive = true;
+                request.Method = "GET";
+                request.Accept = "application/json";
+                request.ContentLength = 0;
+                using (var response = request.GetResponse() as HttpWebResponse)
+                {
+                    using (var reader = new StreamReader(response.GetResponseStream()))
+                    {
+                        responseContent = reader.ReadToEnd();
+                    }
+                }
+
+                var credit = JsonConvert.DeserializeObject<RootCredits>(responseContent);
+
+                foreach (var cast in credit.cast)
+                {
+                    var selectedActor = _actors.SingleOrDefault(actor => actor.Name == cast.name);
+
+                    if (selectedActor == null)
+                    {
+                        selectedActor = new Domain.Actor(cast.name);
+                        _actors.Add(selectedActor);
+                    }
+
+                    movie.Characters.Add(new Character(cast.character, movie, selectedActor));
                 }
 
                 movies.Add(movie);
@@ -170,6 +199,34 @@ namespace MovieFanatic.Web
             public string title { get; set; }
             public double vote_average { get; set; }
             public int vote_count { get; set; }
+        }
+
+        private class Cast
+        {
+            public int cast_id { get; set; }
+            public string character { get; set; }
+            public string credit_id { get; set; }
+            public int id { get; set; }
+            public string name { get; set; }
+            public int order { get; set; }
+            public string profile_path { get; set; }
+        }
+
+        private class Crew
+        {
+            public string credit_id { get; set; }
+            public string department { get; set; }
+            public int id { get; set; }
+            public string job { get; set; }
+            public string name { get; set; }
+            public string profile_path { get; set; }
+        }
+
+        private class RootCredits
+        {
+            public int id { get; set; }
+            public List<Cast> cast { get; set; }
+            public List<Crew> crew { get; set; }
         }
     }
 }

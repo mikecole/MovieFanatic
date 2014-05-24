@@ -17,6 +17,8 @@ namespace MovieFanatic.Web.Controllers
             {
                 context.ProductionCompanyMovies.Delete();
                 context.MovieGenres.Delete();
+                context.Characters.Delete();
+                context.Actors.Delete();
                 context.Movies.Delete();
                 context.Genres.Delete();
                 context.ProductionCompanies.Delete();
