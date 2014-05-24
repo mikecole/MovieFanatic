@@ -12,7 +12,8 @@ namespace MovieFanatic.Web
     //This class is ugly, but it's not really the point...
     public class MovieLoader
     {
-        private static IList<Domain.Genre> _genres = new List<Domain.Genre>();
+        private static readonly IList<Domain.Genre> _genres = new List<Domain.Genre>();
+        private static readonly IList<Domain.ProductionCompany> _productionCompanies = new List<Domain.ProductionCompany>();
 
         public static IEnumerable<Domain.Movie> LoadMovies()
         {
@@ -76,6 +77,19 @@ namespace MovieFanatic.Web
                     }
 
                     movie.MovieGenres.Add(new MovieGenre(movie, selectedGenre));
+                }
+
+                foreach (var productionCompany in detail.production_companies)
+                {
+                    var selectedCompany = _productionCompanies.SingleOrDefault(comp => comp.Name == productionCompany.name);
+
+                    if (selectedCompany == null)
+                    {
+                        selectedCompany = new Domain.ProductionCompany(productionCompany.name);
+                        _productionCompanies.Add(selectedCompany);
+                    }
+
+                    movie.ProductionCompanyMovies.Add(new ProductionCompanyMovie(selectedCompany, movie));
                 }
 
                 movies.Add(movie);

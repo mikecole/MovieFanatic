@@ -43,6 +43,8 @@
     <Compile Include="Genre.cs" />
     <Compile Include="Movie.cs" />
     <Compile Include="MovieGenre.cs" />
+    <Compile Include="ProductionCompany.cs" />
+    <Compile Include="ProductionCompanyMovie.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

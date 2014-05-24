@@ -30,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Elmah">
+      <HintPath>..\..\..\lib\elmah.corelibrary.1.2.1\lib\Elmah.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework">
       <HintPath>..\..\..\lib\EntityFramework.6.1.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -48,6 +51,7 @@
   <ItemGroup>
     <Compile Include="Configurations\GenreConfiguration.cs" />
     <Compile Include="Configurations\MovieConfiguration.cs" />
+    <Compile Include="Configurations\ProductionCompanyConfiguration.cs" />
     <Compile Include="DataContext.cs" />
     <Compile Include="Migrations\201405220245167_CreateMovie.cs" />
     <Compile Include="Migrations\201405220245167_CreateMovie.Designer.cs">
@@ -72,6 +76,18 @@
     <Compile Include="Migrations\201405240107018_FixedMovieGenres.cs" />
     <Compile Include="Migrations\201405240107018_FixedMovieGenres.Designer.cs">
       <DependentUpon>201405240107018_FixedMovieGenres.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201405240129192_AddedProductionCompany.cs" />
+    <Compile Include="Migrations\201405240129192_AddedProductionCompany.Designer.cs">
+      <DependentUpon>201405240129192_AddedProductionCompany.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201405240143054_FixedProductionCompany.cs" />
+    <Compile Include="Migrations\201405240143054_FixedProductionCompany.Designer.cs">
+      <DependentUpon>201405240143054_FixedProductionCompany.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201405240225292_WidenedProductionCompanyName.cs" />
+    <Compile Include="Migrations\201405240225292_WidenedProductionCompanyName.Designer.cs">
+      <DependentUpon>201405240225292_WidenedProductionCompanyName.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -103,6 +119,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201405240107018_FixedMovieGenres.resx">
       <DependentUpon>201405240107018_FixedMovieGenres.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201405240129192_AddedProductionCompany.resx">
+      <DependentUpon>201405240129192_AddedProductionCompany.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201405240143054_FixedProductionCompany.resx">
+      <DependentUpon>201405240143054_FixedProductionCompany.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201405240225292_WidenedProductionCompanyName.resx">
+      <DependentUpon>201405240225292_WidenedProductionCompanyName.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

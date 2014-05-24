@@ -7,7 +7,7 @@ namespace MovieFanatic.Data.Configurations
     {
         public GenreConfiguration()
         {
-            Property(user => user.Name).HasMaxLength(50).IsRequired();
+            Property(genre => genre.Name).HasMaxLength(50).IsRequired();
         }
     }
 }

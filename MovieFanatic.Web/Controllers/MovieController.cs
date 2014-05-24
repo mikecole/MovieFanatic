@@ -15,8 +15,12 @@ namespace MovieFanatic.Web.Controllers
 
             using (var context = new DataContext())
             {
+                context.ProductionCompanyMovies.Delete();
+                context.MovieGenres.Delete();
                 context.Movies.Delete();
                 context.Genres.Delete();
+                context.ProductionCompanies.Delete();
+                context.SaveChanges();
                 movies.ForEach(movie => context.Movies.Add(movie));
                 context.SaveChanges();
             }
