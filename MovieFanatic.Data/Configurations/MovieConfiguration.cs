@@ -7,7 +7,8 @@ namespace MovieFanatic.Data.Configurations
     {
         public MovieConfiguration()
         {
-            Property(user => user.Title).HasMaxLength(100).IsRequired();
+            Property(movie => movie.Title).HasMaxLength(100).IsRequired();
+            Property(movie => movie.AverageRating).HasPrecision(4, 2);
         }
     }
 }

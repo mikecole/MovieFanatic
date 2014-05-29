@@ -1,15 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Linq;
 using System.Web.Mvc;
+using MovieFanatic.Data;
 
 namespace MovieFanatic.Web.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly DataContext _context;
+
+        public HomeController(DataContext context)
+        {
+            _context = context;
+        }
+
         public ActionResult Index()
         {
+            Response.Write(_context.Movies.Count());
+
             return View();
         }
 

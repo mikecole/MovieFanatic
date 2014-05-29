@@ -7,20 +7,20 @@ using System.Net;
 using MovieFanatic.Domain;
 using Newtonsoft.Json;
 
-namespace MovieFanatic.Web
+namespace MovieFanatic.Web.Infrastructure
 {
     //This class is ugly, but it's not really the point...
     public class MovieLoader
     {
         private static readonly IList<Domain.Genre> _genres = new List<Domain.Genre>();
         private static readonly IList<Domain.ProductionCompany> _productionCompanies = new List<Domain.ProductionCompany>();
-        private static readonly IList<Domain.Actor> _actors = new List<Domain.Actor>();
+        private static readonly IList<Actor> _actors = new List<Actor>();
 
         public static IEnumerable<Domain.Movie> LoadMovies()
         {
             var result = new List<Domain.Movie>();
 
-            for (var index = 1; index <= 100; index++)
+            for (var index = 1; index <= 250; index++)
             {
                 result.AddRange(LoadMovies(index));
             }
@@ -37,7 +37,7 @@ namespace MovieFanatic.Web
             request.Method = "GET";
             request.Accept = "application/json";
             request.ContentLength = 0;
-            string responseContent = null;
+            string responseContent;
             using (var response = request.GetResponse() as HttpWebResponse)
             {
                 using (var reader = new StreamReader(response.GetResponseStream()))
@@ -66,7 +66,12 @@ namespace MovieFanatic.Web
 
                 var detail = JsonConvert.DeserializeObject<RootMovieDetail>(responseContent);
 
-                var movie = new Domain.Movie(detail.title, detail.id, DateTime.Parse(detail.release_date)) { Overview = detail.overview };
+                if (detail.release_date == "")
+                {
+                    continue;
+                }
+
+                var movie = new Domain.Movie(detail.title, detail.id, DateTime.Parse(detail.release_date)) { Overview = detail.overview, AverageRating = (decimal?) detail.vote_average};
                 foreach (var genre in detail.genres)
                 {
                     var selectedGenre = _genres.SingleOrDefault(gen => gen.Name == genre.name);
@@ -114,7 +119,7 @@ namespace MovieFanatic.Web
 
                     if (selectedActor == null)
                     {
-                        selectedActor = new Domain.Actor(cast.name);
+                        selectedActor = new Actor(cast.name);
                         _actors.Add(selectedActor);
                     }
 

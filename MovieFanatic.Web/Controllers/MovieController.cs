@@ -1,31 +1,35 @@
-﻿using System.Linq;
-using System.Net;
+﻿using System.Net;
 using System.Web.Mvc;
 using EntityFramework.Extensions;
 using MovieFanatic.Data;
+using MovieFanatic.Web.Infrastructure;
 using WebGrease.Css.Extensions;
 
 namespace MovieFanatic.Web.Controllers
 {
     public class MovieController : Controller
     {
+        private readonly DataContext _dataContext;
+
+        public MovieController(DataContext dataContext)
+        {
+            _dataContext = dataContext;
+        }
+
         public ActionResult Refresh()
         {
             var movies = MovieLoader.LoadMovies();
 
-            using (var context = new DataContext())
-            {
-                context.ProductionCompanyMovies.Delete();
-                context.MovieGenres.Delete();
-                context.Characters.Delete();
-                context.Actors.Delete();
-                context.Movies.Delete();
-                context.Genres.Delete();
-                context.ProductionCompanies.Delete();
-                context.SaveChanges();
-                movies.ForEach(movie => context.Movies.Add(movie));
-                context.SaveChanges();
-            }
+            _dataContext.ProductionCompanyMovies.Delete();
+            _dataContext.MovieGenres.Delete();
+            _dataContext.Characters.Delete();
+            _dataContext.Actors.Delete();
+            _dataContext.Movies.Delete();
+            _dataContext.Genres.Delete();
+            _dataContext.ProductionCompanies.Delete();
+            _dataContext.SaveChanges();
+            movies.ForEach(movie => _dataContext.Movies.Add(movie));
+            _dataContext.SaveChanges();
 
             return new HttpStatusCodeResult(HttpStatusCode.OK);
         }

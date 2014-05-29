@@ -53,7 +53,9 @@
     <Compile Include="Configurations\CharacterConfiguration.cs" />
     <Compile Include="Configurations\GenreConfiguration.cs" />
     <Compile Include="Configurations\MovieConfiguration.cs" />
+    <Compile Include="Configurations\MovieGenreConfiguration.cs" />
     <Compile Include="Configurations\ProductionCompanyConfiguration.cs" />
+    <Compile Include="Configurations\ProductionCompanyMovieConfiguration.cs" />
     <Compile Include="DataContext.cs" />
     <Compile Include="Migrations\201405220245167_CreateMovie.cs" />
     <Compile Include="Migrations\201405220245167_CreateMovie.Designer.cs">
@@ -107,6 +109,14 @@
     <Compile Include="Migrations\201405240446252_WidenedCharacterNameAgain2.Designer.cs">
       <DependentUpon>201405240446252_WidenedCharacterNameAgain2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201405241217017_DefinedMoreFKs.cs" />
+    <Compile Include="Migrations\201405241217017_DefinedMoreFKs.Designer.cs">
+      <DependentUpon>201405241217017_DefinedMoreFKs.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201405290339324_AddedAverageRating.cs" />
+    <Compile Include="Migrations\201405290339324_AddedAverageRating.Designer.cs">
+      <DependentUpon>201405290339324_AddedAverageRating.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -158,6 +168,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201405240446252_WidenedCharacterNameAgain2.resx">
       <DependentUpon>201405240446252_WidenedCharacterNameAgain2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201405241217017_DefinedMoreFKs.resx">
+      <DependentUpon>201405241217017_DefinedMoreFKs.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201405290339324_AddedAverageRating.resx">
+      <DependentUpon>201405290339324_AddedAverageRating.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

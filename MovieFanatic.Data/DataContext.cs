@@ -30,6 +30,8 @@ namespace MovieFanatic.Data
             modelBuilder.Configurations.Add(new ProductionCompanyConfiguration());
             modelBuilder.Configurations.Add(new CharacterConfiguration());
             modelBuilder.Configurations.Add(new ActorConfiguration());
+            modelBuilder.Configurations.Add(new MovieGenreConfiguration());
+            modelBuilder.Configurations.Add(new ProductionCompanyMovieConfiguration());
         }
 
         public override int SaveChanges()

@@ -24,6 +24,7 @@ namespace MovieFanatic.Domain
         public int ApiId { get; private set; }
         public DateTime ReleaseDate { get; private set; }
         public string Overview { get; set; }
+        public decimal? AverageRating { get; set; }
 
         public virtual ICollection<MovieGenre> MovieGenres { get; private set; }
         public virtual ICollection<ProductionCompanyMovie> ProductionCompanyMovies { get; private set; }

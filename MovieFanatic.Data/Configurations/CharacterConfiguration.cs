@@ -11,6 +11,9 @@ namespace MovieFanatic.Data.Configurations
 
             HasRequired(charac => charac.Movie)
                 .WithMany(movie => movie.Characters);
+
+            HasRequired(charac => charac.Actor)
+                .WithMany(actor => actor.Characters);
         }
     }
 }
