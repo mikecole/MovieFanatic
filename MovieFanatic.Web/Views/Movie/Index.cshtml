@@ -1,5 +1,37 @@
-﻿@{
+﻿@model MovieFanatic.Web.Controllers.MovieIndexViewModel[]
+@{
     ViewBag.Title = "Movies To Watch";
 }
 
 <h2>Movies To Watch</h2>
+
+<table class="table table-striped table-hover">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Release Date</th>
+            <th>Overview</th>
+            <th>Average Rating</th>
+            <th>Genre</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var movie in Model)
+        {
+            <tr>
+                <td>@movie.Title</td>
+                <td>@movie.ReleaseDate.ToShortDateString()</td>
+                <td>@movie.Overview</td>
+                <td>@movie.AverageRating</td>
+                <td>
+                    <ul>
+                        @foreach (var genre in movie.Genres)
+                        {
+                            <li>@genre</li>
+                        }
+                    </ul>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

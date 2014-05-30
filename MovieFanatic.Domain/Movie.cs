@@ -25,9 +25,19 @@ namespace MovieFanatic.Domain
         public DateTime ReleaseDate { get; private set; }
         public string Overview { get; set; }
         public decimal? AverageRating { get; set; }
+        public bool HaveWatched { get; private set; }
+        public DateTime? WatchedOn { get; private set; }
+        public string Review { get; private set; }
 
         public virtual ICollection<MovieGenre> MovieGenres { get; private set; }
         public virtual ICollection<ProductionCompanyMovie> ProductionCompanyMovies { get; private set; }
         public virtual ICollection<Character> Characters { get; set; }
+
+        public void Watched(string review)
+        {
+            HaveWatched = true;
+            WatchedOn = DateTime.UtcNow;
+            Review = review;
+        }
     }
 }

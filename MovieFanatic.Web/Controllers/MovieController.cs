@@ -1,6 +1,9 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Web.Mvc;
+using AutoMapper.QueryableExtensions;
 using EntityFramework.Extensions;
 using MovieFanatic.Data;
 using MovieFanatic.Web.Infrastructure;
@@ -19,8 +22,9 @@ namespace MovieFanatic.Web.Controllers
 
         public ActionResult Index()
         {
-            Response.Write(_dataContext.Movies.Count());
-            return View();
+            var model = _dataContext.Movies.Take(25).Project().To<MovieIndexViewModel>().ToArray();
+
+            return View(model);
         }
 
         public ActionResult Refresh()
@@ -40,5 +44,14 @@ namespace MovieFanatic.Web.Controllers
 
             return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
+    }
+
+    public class MovieIndexViewModel
+    {
+        public string Title { get; set; }
+        public DateTime ReleaseDate { get; set; }
+        public string Overview { get; set; }
+        public decimal? AverageRating { get; set; }
+        public IEnumerable<string> Genres { get; set; }
     }
 }

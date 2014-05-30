@@ -117,6 +117,10 @@
     <Compile Include="Migrations\201405290339324_AddedAverageRating.Designer.cs">
       <DependentUpon>201405290339324_AddedAverageRating.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201405301917151_WatchedElementsOnMovie.cs" />
+    <Compile Include="Migrations\201405301917151_WatchedElementsOnMovie.Designer.cs">
+      <DependentUpon>201405301917151_WatchedElementsOnMovie.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -174,6 +178,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201405290339324_AddedAverageRating.resx">
       <DependentUpon>201405290339324_AddedAverageRating.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201405301917151_WatchedElementsOnMovie.resx">
+      <DependentUpon>201405301917151_WatchedElementsOnMovie.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
