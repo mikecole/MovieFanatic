@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System.Linq;
+using System.Net;
 using System.Web.Mvc;
 using EntityFramework.Extensions;
 using MovieFanatic.Data;
@@ -14,6 +15,12 @@ namespace MovieFanatic.Web.Controllers
         public MovieController(DataContext dataContext)
         {
             _dataContext = dataContext;
+        }
+
+        public ActionResult Index()
+        {
+            Response.Write(_dataContext.Movies.Count());
+            return View();
         }
 
         public ActionResult Refresh()
