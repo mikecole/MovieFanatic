@@ -17,6 +17,6 @@ namespace MovieFanatic.Domain
 
         public string Name { get; private set; }
 
-        public virtual ICollection<Character> Characters { get; private set; }
+        public virtual ICollection<Character> Characters { get; protected set; }
     }
 }

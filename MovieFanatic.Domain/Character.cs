@@ -13,7 +13,7 @@
 
         public string Name { get; private set; }
 
-        public virtual Movie Movie { get; private set; }
-        public virtual Actor Actor { get; private set; }
+        public virtual Movie Movie { get; protected set; }
+        public virtual Actor Actor { get; protected set; }
     }
 }

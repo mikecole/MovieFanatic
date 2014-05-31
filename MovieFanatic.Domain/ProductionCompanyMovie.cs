@@ -12,7 +12,7 @@ namespace MovieFanatic.Domain
         }
         public ProductionCompanyMovie() { }
 
-        public ProductionCompany ProductionCompany { get; private set; }
-        public Movie Movie { get; private set; }
+        public virtual ProductionCompany ProductionCompany { get; protected set; }
+        public virtual Movie Movie { get; protected set; }
     }
 }

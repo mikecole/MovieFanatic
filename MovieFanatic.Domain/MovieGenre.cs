@@ -10,7 +10,7 @@
         }
         private MovieGenre() { }
 
-        public Movie Movie { get; private set; }
-        public Genre Genre { get; private set; }
+        public virtual Movie Movie { get; protected set; }
+        public virtual Genre Genre { get; protected set; }
     }
 }
