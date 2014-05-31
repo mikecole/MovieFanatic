@@ -22,7 +22,10 @@ namespace MovieFanatic.Web.Controllers
 
         public ActionResult Index()
         {
-            var model = _dataContext.Movies.Take(25).Project().To<MovieIndexViewModel>().ToArray();
+            var model = new MovieIndexViewModel
+            {
+                Movies = _dataContext.Movies.Take(25).Project().To<MovieIndexViewModel.Movie>()
+            };
 
             return View(model);
         }
@@ -48,10 +51,16 @@ namespace MovieFanatic.Web.Controllers
 
     public class MovieIndexViewModel
     {
-        public string Title { get; set; }
-        public DateTime ReleaseDate { get; set; }
-        public string Overview { get; set; }
-        public decimal? AverageRating { get; set; }
-        public IEnumerable<string> Genres { get; set; }
+        public IEnumerable<Movie> Movies { get; set; } 
+
+        public class Movie
+        {
+            public string Title { get; set; }
+            public DateTime ReleaseDate { get; set; }
+            public string Overview { get; set; }
+            public decimal? AverageRating { get; set; }
+            public IEnumerable<string> Genres { get; set; }
+            public IEnumerable<string> Actors { get; set; } 
+        }
     }
 }

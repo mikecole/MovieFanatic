@@ -12,8 +12,9 @@ namespace MovieFanatic.Web.Infrastructure.AutoMapper
         {
             Mapper.Initialize(cfg => cfg.ConstructServicesUsing(ObjectFactory.GetInstance));
 
-            Mapper.CreateMap<Movie, MovieIndexViewModel>()
-                .ForMember(model => model.Genres, opt => opt.MapFrom(movie => movie.MovieGenres.Select(mg => mg.Genre.Name)));
+            Mapper.CreateMap<Movie, MovieIndexViewModel.Movie>()
+                .ForMember(model => model.Genres, opt => opt.MapFrom(movie => movie.MovieGenres.Select(mg => mg.Genre.Name)))
+                .ForMember(model => model.Actors, opt => opt.MapFrom(movie => movie.Characters.Select(ch => ch.Actor.Name)));
         }
     }
 }

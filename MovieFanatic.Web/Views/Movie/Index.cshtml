@@ -1,4 +1,4 @@
-﻿@model MovieFanatic.Web.Controllers.MovieIndexViewModel[]
+﻿@model MovieFanatic.Web.Controllers.MovieIndexViewModel
 @{
     ViewBag.Title = "Movies To Watch";
 }
@@ -13,10 +13,11 @@
             <th>Overview</th>
             <th>Average Rating</th>
             <th>Genre</th>
+            <th>Actors</th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var movie in Model)
+        @foreach (var movie in Model.Movies)
         {
             <tr>
                 <td>@movie.Title</td>
@@ -28,6 +29,14 @@
                         @foreach (var genre in movie.Genres)
                         {
                             <li>@genre</li>
+                        }
+                    </ul>
+                </td>
+                <td>
+                    <ul>
+                        @foreach (var actor in movie.Actors)
+                        {
+                            <li>@actor</li>
                         }
                     </ul>
                 </td>
