@@ -1,18 +1,33 @@
 ﻿using System;
 using System.Data.Entity;
+using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Data.Entity.Validation;
 using System.Linq;
 using System.Runtime.InteropServices;
 using Elmah;
 using MovieFanatic.Data.Configurations;
 using MovieFanatic.Domain;
+using MovieFanatic.Utility;
 
 namespace MovieFanatic.Data
 {
     public class DataContext : DbContext
     {
+        private readonly IAuthenticator _authenticator;
+
+// ReSharper disable once MemberCanBePrivate.Global
         public DataContext()
-            : base("MovieFanatic") { }
+            : base("MovieFanatic")
+        {
+            //Migrations should be the only thing using this constructor. Use faked authenticator.
+            _authenticator = new MigrationsAuthenticator();
+        }
+
+        public DataContext(IAuthenticator authenticator)
+            : this()
+        {
+            _authenticator = authenticator;
+        }
 
         public DbSet<Movie> Movies { get; set; }
         public DbSet<Genre> Genres { get; set; }
@@ -32,10 +47,40 @@ namespace MovieFanatic.Data
             modelBuilder.Configurations.Add(new ActorConfiguration());
             modelBuilder.Configurations.Add(new MovieGenreConfiguration());
             modelBuilder.Configurations.Add(new ProductionCompanyMovieConfiguration());
+
+            var conv = new AttributeToTableAnnotationConvention<SoftDeleteAttribute, string>(
+                "SoftDeleteColumnName",
+                (type, attributes) => attributes.Single().ColumnName);
+
+            modelBuilder.Conventions.Add(conv);
         }
 
         public override int SaveChanges()
         {
+            var now = DateTime.Now;
+            var user = _authenticator.IsAuthenticated() ? _authenticator.GetCurrentUser() : "Anonymous";
+            var changeSet = ChangeTracker.Entries<EntityBase>();
+
+            if (changeSet != null)
+            {
+                foreach (var item in changeSet)
+                {
+                    switch (item.State)
+                    {
+                        case EntityState.Added:
+                            item.Entity.AddedBy = user;
+                            item.Entity.AddedDate = now;
+                            item.Entity.UpdatedBy = user;
+                            item.Entity.UpdatedDate = now;
+                            break;
+                        case EntityState.Modified:
+                            item.Entity.UpdatedBy = user;
+                            item.Entity.UpdatedDate = now;
+                            break;
+                    }
+                }
+            }
+
             try
             {
                 return base.SaveChanges();

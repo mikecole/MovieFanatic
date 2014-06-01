@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{C49163BF-6286-4D07-AF59-45E897E2DA40}</ProjectGuid>
+    <ProjectGuid>{FA47CB64-AF18-4A21-AC2F-14F89ECD3839}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MovieFanatic.Domain</RootNamespace>
-    <AssemblyName>MovieFanatic.Domain</AssemblyName>
+    <RootNamespace>MovieFanatic.Utility</RootNamespace>
+    <AssemblyName>MovieFanatic.Utility</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -30,6 +30,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\..\..\lib\EntityFramework.6.1.1-beta1\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\..\..\lib\EntityFramework.6.1.1-beta1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -40,22 +48,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IAuthenticator.cs" />
-    <Compile Include="Model\Actor.cs" />
-    <Compile Include="Model\Character.cs" />
-    <Compile Include="Model\EntityBase.cs" />
-    <Compile Include="Model\Genre.cs" />
-    <Compile Include="Model\Movie.cs" />
-    <Compile Include="Model\MovieGenre.cs" />
-    <Compile Include="Model\ProductionCompany.cs" />
-    <Compile Include="Model\ProductionCompanyMovie.cs" />
+    <Compile Include="SoftDeleteAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MovieFanatic.Utility\MovieFanatic.Utility.csproj">
-      <Project>{FA47CB64-AF18-4A21-AC2F-14F89ECD3839}</Project>
-      <Name>MovieFanatic.Utility</Name>
-    </ProjectReference>
+    <None Include="App.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

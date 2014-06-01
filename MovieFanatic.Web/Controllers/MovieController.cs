@@ -30,6 +30,22 @@ namespace MovieFanatic.Web.Controllers
             return View(model);
         }
 
+        [HttpPost]
+        public ActionResult Delete(int id)
+        {
+            var movie = _dataContext.Movies.Find(id);
+
+            if (movie == null)
+            {
+                return new HttpNotFoundResult("Movie not found.");
+            }
+
+            _dataContext.Movies.Remove(movie);
+            _dataContext.SaveChanges();
+
+            return RedirectToAction("Index");
+        }
+
         public ActionResult Refresh()
         {
             var movies = MovieLoader.LoadMovies();
@@ -55,6 +71,7 @@ namespace MovieFanatic.Web.Controllers
 
         public class Movie
         {
+            public int Id { get; set; }
             public string Title { get; set; }
             public DateTime ReleaseDate { get; set; }
             public string Overview { get; set; }

@@ -31,7 +31,7 @@ namespace MovieFanatic.Domain
 
         public virtual ICollection<MovieGenre> MovieGenres { get; protected set; }
         public virtual ICollection<ProductionCompanyMovie> ProductionCompanyMovies { get; protected set; }
-        public virtual ICollection<Character> Characters { get; set; }
+        public virtual ICollection<Character> Characters { get; protected set; }
 
         public void Watched(string review)
         {

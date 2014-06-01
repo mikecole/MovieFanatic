@@ -14,6 +14,7 @@
             <th>Average Rating</th>
             <th>Genre</th>
             <th>Actors</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -39,6 +40,12 @@
                             <li>@actor</li>
                         }
                     </ul>
+                </td>
+                <td>
+                    @using (Html.BeginForm("Delete", null, new { movie.Id }))
+                    {
+                        <button type="submit" class="btn btn-danger">I Don't Want To Watch This</button>
+                    }
                 </td>
             </tr>
         }

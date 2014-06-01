@@ -33,11 +33,13 @@
     <Reference Include="Elmah">
       <HintPath>..\..\..\lib\elmah.corelibrary.1.2.1\lib\Elmah.dll</HintPath>
     </Reference>
-    <Reference Include="EntityFramework">
-      <HintPath>..\..\..\lib\EntityFramework.6.1.0\lib\net45\EntityFramework.dll</HintPath>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\lib\EntityFramework.6.1.1-beta1\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer">
-      <HintPath>..\..\..\lib\EntityFramework.6.1.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <HintPath>..\..\..\lib\EntityFramework.6.1.1-beta1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -49,14 +51,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Configurations\ActorConfiguration.cs" />
-    <Compile Include="Configurations\CharacterConfiguration.cs" />
-    <Compile Include="Configurations\GenreConfiguration.cs" />
-    <Compile Include="Configurations\MovieConfiguration.cs" />
-    <Compile Include="Configurations\MovieGenreConfiguration.cs" />
-    <Compile Include="Configurations\ProductionCompanyConfiguration.cs" />
-    <Compile Include="Configurations\ProductionCompanyMovieConfiguration.cs" />
+    <Compile Include="Extensions\Configurations\ActorConfiguration.cs" />
+    <Compile Include="Extensions\Configurations\CharacterConfiguration.cs" />
+    <Compile Include="Extensions\Configurations\EntityFrameworkConfiguration.cs" />
+    <Compile Include="Extensions\Configurations\GenreConfiguration.cs" />
+    <Compile Include="Extensions\Configurations\MovieConfiguration.cs" />
+    <Compile Include="Extensions\Configurations\MovieGenreConfiguration.cs" />
+    <Compile Include="Extensions\Configurations\ProductionCompanyConfiguration.cs" />
+    <Compile Include="Extensions\Configurations\ProductionCompanyMovieConfiguration.cs" />
     <Compile Include="DataContext.cs" />
+    <Compile Include="Extensions\Interceptors\SoftDeleteInterceptor.cs" />
+    <Compile Include="Extensions\Visitors\SoftDeleteQueryVisitor.cs" />
+    <Compile Include="MigrationsAuthenticator.cs" />
     <Compile Include="Migrations\201405220245167_CreateMovie.cs" />
     <Compile Include="Migrations\201405220245167_CreateMovie.Designer.cs">
       <DependentUpon>201405220245167_CreateMovie.cs</DependentUpon>
@@ -121,6 +127,14 @@
     <Compile Include="Migrations\201405301917151_WatchedElementsOnMovie.Designer.cs">
       <DependentUpon>201405301917151_WatchedElementsOnMovie.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201405310353179_AddingFabFive.cs" />
+    <Compile Include="Migrations\201405310353179_AddingFabFive.Designer.cs">
+      <DependentUpon>201405310353179_AddingFabFive.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201406010201040_ConfigureSoftDelete.cs" />
+    <Compile Include="Migrations\201406010201040_ConfigureSoftDelete.Designer.cs">
+      <DependentUpon>201406010201040_ConfigureSoftDelete.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -129,8 +143,13 @@
       <Project>{c49163bf-6286-4d07-af59-45e897e2da40}</Project>
       <Name>MovieFanatic.Domain</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MovieFanatic.Utility\MovieFanatic.Utility.csproj">
+      <Project>{FA47CB64-AF18-4A21-AC2F-14F89ECD3839}</Project>
+      <Name>MovieFanatic.Utility</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -181,6 +200,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201405301917151_WatchedElementsOnMovie.resx">
       <DependentUpon>201405301917151_WatchedElementsOnMovie.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201405310353179_AddingFabFive.resx">
+      <DependentUpon>201405310353179_AddingFabFive.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201406010201040_ConfigureSoftDelete.resx">
+      <DependentUpon>201406010201040_ConfigureSoftDelete.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
