@@ -1,7 +1,7 @@
 ﻿using System.Data.Entity;
 using MovieFanatic.Data.Extensions.Interceptors;
 
-namespace MovieFanatic.Data.Configurations
+namespace MovieFanatic.Data.Extensions.Configurations
 {
     public class EntityFrameworkConfiguration : DbConfiguration
     {

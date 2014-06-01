@@ -1,6 +1,5 @@
 ﻿using System.Web.Mvc;
 using StructureMap;
-using StructureMap.Graph;
 
 namespace MovieFanatic.Web.Infrastructure.IoC
 {

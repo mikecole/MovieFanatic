@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using AutoMapper;
 using MovieFanatic.Domain;
+using MovieFanatic.Domain.Model;
 using MovieFanatic.Web.Controllers;
 using StructureMap;
 

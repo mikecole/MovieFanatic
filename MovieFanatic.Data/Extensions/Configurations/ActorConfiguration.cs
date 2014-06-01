@@ -1,7 +1,8 @@
 ﻿using System.Data.Entity.ModelConfiguration;
 using MovieFanatic.Domain;
+using MovieFanatic.Domain.Model;
 
-namespace MovieFanatic.Data.Configurations
+namespace MovieFanatic.Data.Extensions.Configurations
 {
     public class ActorConfiguration : EntityTypeConfiguration<Actor>
     {

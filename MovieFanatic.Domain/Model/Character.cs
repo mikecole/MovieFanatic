@@ -1,4 +1,4 @@
-﻿namespace MovieFanatic.Domain
+﻿namespace MovieFanatic.Domain.Model
 {
     public class Character : EntityBase
     {

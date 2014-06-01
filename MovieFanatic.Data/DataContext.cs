@@ -3,10 +3,11 @@ using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Data.Entity.Validation;
 using System.Linq;
-using System.Runtime.InteropServices;
 using Elmah;
-using MovieFanatic.Data.Configurations;
+using MovieFanatic.Data.Extensions;
+using MovieFanatic.Data.Extensions.Configurations;
 using MovieFanatic.Domain;
+using MovieFanatic.Domain.Model;
 using MovieFanatic.Utility;
 
 namespace MovieFanatic.Data

@@ -20,10 +20,8 @@ namespace MovieFanatic.Data.Extensions.Visitors
                             column),
                         DbExpression.FromBoolean(true)));
             }
-            else
-            {
-                return base.Visit(expression);
-            }
+
+            return base.Visit(expression);
         }
     }
 }

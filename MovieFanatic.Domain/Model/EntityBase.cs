@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using MovieFanatic.Utility;
 
-namespace MovieFanatic.Domain
+namespace MovieFanatic.Domain.Model
 {
     [SoftDelete("IsDeleted")]
     public abstract class EntityBase

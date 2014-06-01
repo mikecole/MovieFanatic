@@ -4,7 +4,7 @@ using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Net;
-using MovieFanatic.Domain;
+using MovieFanatic.Domain.Model;
 using Newtonsoft.Json;
 
 namespace MovieFanatic.Web.Infrastructure
@@ -12,13 +12,13 @@ namespace MovieFanatic.Web.Infrastructure
     //This class is ugly, but it's not really the point...
     public class MovieLoader
     {
-        private static readonly IList<Domain.Genre> _genres = new List<Domain.Genre>();
-        private static readonly IList<Domain.ProductionCompany> _productionCompanies = new List<Domain.ProductionCompany>();
+        private static readonly IList<Domain.Model.Genre> _genres = new List<Domain.Model.Genre>();
+        private static readonly IList<Domain.Model.ProductionCompany> _productionCompanies = new List<Domain.Model.ProductionCompany>();
         private static readonly IList<Actor> _actors = new List<Actor>();
 
-        public static IEnumerable<Domain.Movie> LoadMovies()
+        public static IEnumerable<Domain.Model.Movie> LoadMovies()
         {
-            var result = new List<Domain.Movie>();
+            var result = new List<Domain.Model.Movie>();
 
             for (var index = 1; index <= 250; index++)
             {
@@ -28,7 +28,7 @@ namespace MovieFanatic.Web.Infrastructure
             return result;
         }
 
-        private static IEnumerable<Domain.Movie> LoadMovies(int page)
+        private static IEnumerable<Domain.Model.Movie> LoadMovies(int page)
         {
             var apiKey = ConfigurationManager.AppSettings["tmd-api-key"];
 
@@ -38,7 +38,7 @@ namespace MovieFanatic.Web.Infrastructure
             request.Accept = "application/json";
             request.ContentLength = 0;
             string responseContent;
-            using (var response = request.GetResponse() as HttpWebResponse)
+            using (var response = (HttpWebResponse)request.GetResponse())
             {
                 using (var reader = new StreamReader(response.GetResponseStream()))
                 {
@@ -47,7 +47,7 @@ namespace MovieFanatic.Web.Infrastructure
             }
 
             var results = JsonConvert.DeserializeObject<RootMovie>(responseContent).results;
-            var movies = new List<Domain.Movie>();
+            var movies = new List<Domain.Model.Movie>();
 
             foreach (var result in results)
             {
@@ -56,7 +56,7 @@ namespace MovieFanatic.Web.Infrastructure
                 request.Method = "GET";
                 request.Accept = "application/json";
                 request.ContentLength = 0;
-                using (var response = request.GetResponse() as HttpWebResponse)
+                using (var response = (HttpWebResponse)request.GetResponse())
                 {
                     using (var reader = new StreamReader(response.GetResponseStream()))
                     {
@@ -71,14 +71,14 @@ namespace MovieFanatic.Web.Infrastructure
                     continue;
                 }
 
-                var movie = new Domain.Movie(detail.title, detail.id, DateTime.Parse(detail.release_date)) { Overview = detail.overview, AverageRating = (decimal?) detail.vote_average};
+                var movie = new Domain.Model.Movie(detail.title, detail.id, DateTime.Parse(detail.release_date)) { Overview = detail.overview, AverageRating = (decimal?) detail.vote_average};
                 foreach (var genre in detail.genres)
                 {
                     var selectedGenre = _genres.SingleOrDefault(gen => gen.Name == genre.name);
 
                     if (selectedGenre == null)
                     {
-                        selectedGenre = new Domain.Genre(genre.name);
+                        selectedGenre = new Domain.Model.Genre(genre.name);
                         _genres.Add(selectedGenre);
                     }
 
@@ -91,7 +91,7 @@ namespace MovieFanatic.Web.Infrastructure
 
                     if (selectedCompany == null)
                     {
-                        selectedCompany = new Domain.ProductionCompany(productionCompany.name);
+                        selectedCompany = new Domain.Model.ProductionCompany(productionCompany.name);
                         _productionCompanies.Add(selectedCompany);
                     }
 
@@ -103,7 +103,7 @@ namespace MovieFanatic.Web.Infrastructure
                 request.Method = "GET";
                 request.Accept = "application/json";
                 request.ContentLength = 0;
-                using (var response = request.GetResponse() as HttpWebResponse)
+                using (var response = (HttpWebResponse)request.GetResponse())
                 {
                     using (var reader = new StreamReader(response.GetResponseStream()))
                     {

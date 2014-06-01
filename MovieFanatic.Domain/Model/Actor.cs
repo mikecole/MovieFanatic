@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-namespace MovieFanatic.Domain
+namespace MovieFanatic.Domain.Model
 {
     public class Actor : EntityBase
     {
