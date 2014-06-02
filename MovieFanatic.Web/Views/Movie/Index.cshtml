@@ -42,9 +42,19 @@
                     </ul>
                 </td>
                 <td>
-                    @using (Html.BeginForm("Delete", null, new { movie.Id }))
+                    @if (!Model.IsShowingDeleted)
                     {
-                        <button type="submit" class="btn btn-danger">I Don't Want To Watch This</button>
+                        using (Html.BeginForm("Delete", null, new { movie.Id }))
+                        {
+                            <button type="submit" class="btn btn-danger">I Don't Want To Watch This</button>
+                        }
+                    }
+                    else
+                    {
+                        using (Html.BeginForm("Restore", null, new { movie.Id }))
+                        {
+                            <button type="submit" class="btn btn-primary">I Do Want To Watch This</button>
+                        }
                     }
                 </td>
             </tr>

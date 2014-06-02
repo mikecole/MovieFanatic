@@ -37,6 +37,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\lib\EntityFramework.6.1.1-beta1\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
+    <Reference Include="EntityFramework.Filters">
+      <HintPath>..\..\..\lib\EntityFramework.Filters.0.2.0.0\lib\net40\EntityFramework.Filters.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework.SqlServer">
       <HintPath>..\..\..\lib\EntityFramework.6.1.1-beta1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
@@ -61,7 +64,6 @@
     <Compile Include="Extensions\Configurations\ProductionCompanyMovieConfiguration.cs" />
     <Compile Include="DataContext.cs" />
     <Compile Include="Extensions\Interceptors\SoftDeleteInterceptor.cs" />
-    <Compile Include="Extensions\Visitors\SoftDeleteQueryVisitor.cs" />
     <Compile Include="MigrationsAuthenticator.cs" />
     <Compile Include="Migrations\201405220245167_CreateMovie.cs" />
     <Compile Include="Migrations\201405220245167_CreateMovie.Designer.cs">
@@ -135,6 +137,10 @@
     <Compile Include="Migrations\201406010201040_ConfigureSoftDelete.Designer.cs">
       <DependentUpon>201406010201040_ConfigureSoftDelete.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201406020249271_DifferentSoftDeleteInterceptor.cs" />
+    <Compile Include="Migrations\201406020249271_DifferentSoftDeleteInterceptor.Designer.cs">
+      <DependentUpon>201406020249271_DifferentSoftDeleteInterceptor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -206,6 +212,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201406010201040_ConfigureSoftDelete.resx">
       <DependentUpon>201406010201040_ConfigureSoftDelete.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201406020249271_DifferentSoftDeleteInterceptor.resx">
+      <DependentUpon>201406020249271_DifferentSoftDeleteInterceptor.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

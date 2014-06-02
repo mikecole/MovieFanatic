@@ -4,7 +4,7 @@ using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Data.Entity.Validation;
 using System.Linq;
 using Elmah;
-using MovieFanatic.Data.Extensions;
+using EntityFramework.Filters;
 using MovieFanatic.Data.Extensions.Configurations;
 using MovieFanatic.Domain;
 using MovieFanatic.Domain.Model;
@@ -16,7 +16,7 @@ namespace MovieFanatic.Data
     {
         private readonly IAuthenticator _authenticator;
 
-// ReSharper disable once MemberCanBePrivate.Global
+        // ReSharper disable once MemberCanBePrivate.Global
         public DataContext()
             : base("MovieFanatic")
         {
@@ -25,9 +25,10 @@ namespace MovieFanatic.Data
         }
 
         public DataContext(IAuthenticator authenticator)
-            : this()
+            : base("MovieFanatic")
         {
             _authenticator = authenticator;
+            this.EnableFilter("SoftDelete");
         }
 
         public DbSet<Movie> Movies { get; set; }
@@ -54,6 +55,9 @@ namespace MovieFanatic.Data
                 (type, attributes) => attributes.Single().ColumnName);
 
             modelBuilder.Conventions.Add(conv);
+
+            //This fails when using !e.IsDeleted, but works this way. Weird.
+            modelBuilder.Conventions.Add(FilterConvention.Create<EntityBase>("SoftDelete", (e) => e.IsDeleted == false));
         }
 
         public override int SaveChanges()

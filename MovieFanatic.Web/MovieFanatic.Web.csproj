@@ -63,6 +63,10 @@
     <Reference Include="EntityFramework.Extended">
       <HintPath>..\..\..\lib\EntityFramework.Extended.6.1.0.95\lib\net45\EntityFramework.Extended.dll</HintPath>
     </Reference>
+    <Reference Include="EntityFramework.Filters, Version=0.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\lib\EntityFramework.Filters.0.2.0.0\lib\net40\EntityFramework.Filters.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework.SqlServer">
       <HintPath>..\..\..\lib\EntityFramework.6.1.1-beta1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>

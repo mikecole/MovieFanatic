@@ -5,6 +5,7 @@ using System.Net;
 using System.Web.Mvc;
 using AutoMapper.QueryableExtensions;
 using EntityFramework.Extensions;
+using EntityFramework.Filters;
 using MovieFanatic.Data;
 using MovieFanatic.Web.Infrastructure;
 using WebGrease.Css.Extensions;
@@ -24,10 +25,28 @@ namespace MovieFanatic.Web.Controllers
         {
             var model = new MovieIndexViewModel
             {
-                Movies = _dataContext.Movies.Take(25).Project().To<MovieIndexViewModel.Movie>()
+                Movies = _dataContext.Movies
+                                     .OrderByDescending(movie => movie.AverageRating)
+                                     .Take(25)
+                                     .Project().To<MovieIndexViewModel.Movie>()
             };
 
             return View(model);
+        }
+
+        public ActionResult Deleted()
+        {
+            _dataContext.DisableFilter("SoftDelete");
+
+            var model = new MovieIndexViewModel
+            {
+                IsShowingDeleted = true,
+                Movies = _dataContext.Movies
+                                     .Where(movie => movie.IsDeleted)
+                                     .Project().To<MovieIndexViewModel.Movie>()
+            };
+
+            return View("Index", model);
         }
 
         [HttpPost]
@@ -44,6 +63,24 @@ namespace MovieFanatic.Web.Controllers
             _dataContext.SaveChanges();
 
             return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public ActionResult Restore(int id)
+        {
+            _dataContext.DisableFilter("SoftDelete");
+
+            var movie = _dataContext.Movies.Find(id);
+
+            if (movie == null)
+            {
+                return new HttpNotFoundResult("Movie not found.");
+            }
+
+            movie.IsDeleted = false;
+            _dataContext.SaveChanges();
+
+            return RedirectToAction("Deleted");
         }
 
         public ActionResult Refresh()
@@ -67,7 +104,8 @@ namespace MovieFanatic.Web.Controllers
 
     public class MovieIndexViewModel
     {
-        public IEnumerable<Movie> Movies { get; set; } 
+        public bool IsShowingDeleted { get; set; }
+        public IEnumerable<Movie> Movies { get; set; }
 
         public class Movie
         {
@@ -77,7 +115,7 @@ namespace MovieFanatic.Web.Controllers
             public string Overview { get; set; }
             public decimal? AverageRating { get; set; }
             public IEnumerable<string> Genres { get; set; }
-            public IEnumerable<string> Actors { get; set; } 
+            public IEnumerable<string> Actors { get; set; }
         }
     }
 }
