@@ -51,6 +51,7 @@ namespace MovieFanatic.Web.Controllers
         [HttpPost]
         public ActionResult Delete(int id)
         {
+            //Run a traditional ORM delete. This recognizes interceptors but makes an additional round trip to DB...
             var movie = _dataContext.Movies.Find(id);
 
             if (movie == null)
@@ -60,6 +61,19 @@ namespace MovieFanatic.Web.Controllers
 
             _dataContext.Movies.Remove(movie);
             _dataContext.SaveChanges();
+
+            //Or batch delete (reduces a round trip to DB). Warning: bypasses interceptors...
+            //if (_dataContext.Movies.Where(movie => movie.Id == id).Delete() == 0)
+            //{
+            //    return new HttpNotFoundResult("Movie not found.");
+            //}
+
+            //Or batch update (reduces a round trip to DB) to manage soft deletes. Warning: soft delete logic
+            //will be spread throughout your app if you use this method...
+            //if (_dataContext.Movies.Where(m => m.Id == id).Update(m => new Movie(m.Title, m.ApiId, m.ReleaseDate) { IsDeleted = true }) == 0)
+            //{
+            //    return new HttpNotFoundResult("Movie not found.");
+            //}
 
             return RedirectToAction("Index");
         }
@@ -94,7 +108,7 @@ namespace MovieFanatic.Web.Controllers
             _dataContext.Genres.Delete();
             _dataContext.ProductionCompanies.Delete();
             _dataContext.SaveChanges();
-            movies.ForEach(movie => _dataContext.Movies.Add(movie));
+            ListExtensions.ForEach(movies, movie => _dataContext.Movies.Add(movie));
             _dataContext.SaveChanges();
 
             return new HttpStatusCodeResult(HttpStatusCode.OK);
