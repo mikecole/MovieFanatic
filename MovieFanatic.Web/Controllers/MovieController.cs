@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Net;
 using System.Web.Mvc;
 using AutoMapper.QueryableExtensions;
@@ -8,6 +6,7 @@ using EntityFramework.Extensions;
 using EntityFramework.Filters;
 using MovieFanatic.Data;
 using MovieFanatic.Web.Infrastructure;
+using MovieFanatic.Web.Models;
 using WebGrease.Css.Extensions;
 
 namespace MovieFanatic.Web.Controllers
@@ -99,23 +98,6 @@ namespace MovieFanatic.Web.Controllers
             _dataContext.SaveChanges();
 
             return new HttpStatusCodeResult(HttpStatusCode.OK);
-        }
-    }
-
-    public class MovieIndexViewModel
-    {
-        public bool IsShowingDeleted { get; set; }
-        public IEnumerable<Movie> Movies { get; set; }
-
-        public class Movie
-        {
-            public int Id { get; set; }
-            public string Title { get; set; }
-            public DateTime ReleaseDate { get; set; }
-            public string Overview { get; set; }
-            public decimal? AverageRating { get; set; }
-            public IEnumerable<string> Genres { get; set; }
-            public IEnumerable<string> Actors { get; set; }
         }
     }
 }

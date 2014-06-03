@@ -149,7 +149,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Models\" />
     <Folder Include="Uploads\Log\" />
   </ItemGroup>
   <ItemGroup>
@@ -160,6 +159,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\StructureMapConfig.cs" />
     <Compile Include="Controllers\MovieController.cs" />
+    <Compile Include="Models\MovieIndexViewModel.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

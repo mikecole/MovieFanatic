@@ -3,6 +3,7 @@ using AutoMapper;
 using MovieFanatic.Domain;
 using MovieFanatic.Domain.Model;
 using MovieFanatic.Web.Controllers;
+using MovieFanatic.Web.Models;
 using StructureMap;
 
 namespace MovieFanatic.Web.Infrastructure.AutoMapper
