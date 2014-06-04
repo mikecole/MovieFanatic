@@ -9,7 +9,6 @@ using Newtonsoft.Json;
 
 namespace MovieFanatic.Web.Infrastructure
 {
-    //This class is ugly, but it's not really the point...
     public class MovieLoader
     {
         private static readonly IList<Domain.Model.Genre> _genres = new List<Domain.Model.Genre>();

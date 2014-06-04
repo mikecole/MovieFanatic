@@ -60,9 +60,14 @@ namespace MovieFanatic.Web.Controllers
         {
             if (!ModelState.IsValid)
             {
+                model.Statuses = _dataContext.MovieStatuses
+                                    .OrderByDescending(stat => stat.Status)
+                                    .Project().To<SelectListItem>()
+                                    .ToArray();
+
                 return View(model);
             }
-            
+
             var movie = _dataContext.Movies.Find(id);
 
             if (movie == null)
@@ -73,7 +78,7 @@ namespace MovieFanatic.Web.Controllers
             movie.Title = model.Title;
             model.Overview = model.Overview;
             movie.Status = _dataContext.MovieStatuses.Find(model.StatusId);
-            
+
             _dataContext.SaveChanges();
 
             return RedirectToAction("Index");
@@ -141,9 +146,12 @@ namespace MovieFanatic.Web.Controllers
             movie.IsDeleted = false;
             _dataContext.SaveChanges();
 
+            _dataContext.EnableFilter("SoftDelete");
+
             return RedirectToAction("Deleted");
         }
 
+        //This is ugly, but it's not really the point of the demo...
         public ActionResult Refresh()
         {
             var movies = MovieLoader.LoadMovies();

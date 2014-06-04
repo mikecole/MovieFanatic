@@ -6,9 +6,11 @@ namespace MovieFanatic.Web.Models
 {
     public class MovieDetailViewModel
     {
-        [Required]
+        [Required(ErrorMessage = "Required")]
         public string Title { get; set; }
+        [Required(ErrorMessage = "Required")]
         public string Overview { get; set; }
+        [Required(ErrorMessage = "Required")]
         public int StatusId { get; set; }
         public IEnumerable<SelectListItem> Statuses { get; set; }
     }
