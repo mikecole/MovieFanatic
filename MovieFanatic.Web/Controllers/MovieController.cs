@@ -1,10 +1,12 @@
 ﻿using System.Linq;
 using System.Net;
 using System.Web.Mvc;
+using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using EntityFramework.Extensions;
 using EntityFramework.Filters;
 using MovieFanatic.Data;
+using MovieFanatic.Domain.Model;
 using MovieFanatic.Web.Infrastructure;
 using MovieFanatic.Web.Models;
 using WebGrease.Css.Extensions;
@@ -28,6 +30,7 @@ namespace MovieFanatic.Web.Controllers
                                      .OrderByDescending(movie => movie.AverageRating)
                                      .Take(25)
                                      .Project().To<MovieIndexViewModel.Movie>()
+                                     .ToArray()
             };
 
             return View(model);
@@ -44,6 +47,8 @@ namespace MovieFanatic.Web.Controllers
                                      .Where(movie => movie.IsDeleted)
                                      .Project().To<MovieIndexViewModel.Movie>()
             };
+
+            _dataContext.EnableFilter("SoftDelete");
 
             return View("Index", model);
         }
