@@ -60,6 +60,7 @@
     <Compile Include="Extensions\Configurations\GenreConfiguration.cs" />
     <Compile Include="Extensions\Configurations\MovieConfiguration.cs" />
     <Compile Include="Extensions\Configurations\MovieGenreConfiguration.cs" />
+    <Compile Include="Extensions\Configurations\MovieStatusConfiguration.cs" />
     <Compile Include="Extensions\Configurations\ProductionCompanyConfiguration.cs" />
     <Compile Include="Extensions\Configurations\ProductionCompanyMovieConfiguration.cs" />
     <Compile Include="DataContext.cs" />
@@ -141,6 +142,10 @@
     <Compile Include="Migrations\201406020249271_DifferentSoftDeleteInterceptor.Designer.cs">
       <DependentUpon>201406020249271_DifferentSoftDeleteInterceptor.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201406041549494_AddedMovieStatus.cs" />
+    <Compile Include="Migrations\201406041549494_AddedMovieStatus.Designer.cs">
+      <DependentUpon>201406041549494_AddedMovieStatus.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -215,6 +220,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201406020249271_DifferentSoftDeleteInterceptor.resx">
       <DependentUpon>201406020249271_DifferentSoftDeleteInterceptor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201406041549494_AddedMovieStatus.resx">
+      <DependentUpon>201406041549494_AddedMovieStatus.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

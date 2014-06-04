@@ -42,6 +42,7 @@
                     </ul>
                 </td>
                 <td>
+                    @Html.ActionLink("Details", "Edit", new { Id = movie.Id }, new { @class = "btn btn-default" })
                     @if (!Model.IsShowingDeleted)
                     {
                         using (Html.BeginForm("Delete", null, new { movie.Id }))

@@ -159,6 +159,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\StructureMapConfig.cs" />
     <Compile Include="Controllers\MovieController.cs" />
+    <Compile Include="Models\MovieDetailViewModel.cs" />
     <Compile Include="Models\MovieIndexViewModel.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -212,6 +213,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Movie\Index.cshtml" />
+    <Content Include="Views\Movie\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MovieFanatic.Data\MovieFanatic.Data.csproj">

@@ -6,12 +6,13 @@ namespace MovieFanatic.Domain.Model
 {
     public class Movie : EntityBase
     {
-        public Movie(string title, int apiId, DateTime releaseDate)
+        public Movie(string title, int apiId, DateTime releaseDate, MovieStatus status)
             : this()
         {
             Title = title;
             ApiId = apiId;
             ReleaseDate = releaseDate;
+            Status = status;
         }
         private Movie()
         {
@@ -20,7 +21,7 @@ namespace MovieFanatic.Domain.Model
             Characters = new Collection<Character>();
         }
 
-        public string Title { get; private set; }
+        public string Title { get; set; }
         public int ApiId { get; private set; }
         public DateTime ReleaseDate { get; private set; }
         public string Overview { get; set; }
@@ -29,6 +30,7 @@ namespace MovieFanatic.Domain.Model
         public DateTime? WatchedOn { get; private set; }
         public string Review { get; private set; }
 
+        public virtual MovieStatus Status { get; set; }
         public virtual ICollection<MovieGenre> MovieGenres { get; protected set; }
         public virtual ICollection<ProductionCompanyMovie> ProductionCompanyMovies { get; protected set; }
         public virtual ICollection<Character> Characters { get; protected set; }

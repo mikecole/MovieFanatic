@@ -15,12 +15,13 @@ namespace MovieFanatic.Web.Infrastructure
         private static readonly IList<Domain.Model.Genre> _genres = new List<Domain.Model.Genre>();
         private static readonly IList<Domain.Model.ProductionCompany> _productionCompanies = new List<Domain.Model.ProductionCompany>();
         private static readonly IList<Actor> _actors = new List<Actor>();
+        private static readonly IList<MovieStatus> _statuses = new List<MovieStatus>();
 
         public static IEnumerable<Domain.Model.Movie> LoadMovies()
         {
             var result = new List<Domain.Model.Movie>();
 
-            for (var index = 1; index <= 250; index++)
+            for (var index = 1; index <= 100; index++)
             {
                 result.AddRange(LoadMovies(index));
             }
@@ -71,7 +72,14 @@ namespace MovieFanatic.Web.Infrastructure
                     continue;
                 }
 
-                var movie = new Domain.Model.Movie(detail.title, detail.id, DateTime.Parse(detail.release_date)) { Overview = detail.overview, AverageRating = (decimal?) detail.vote_average};
+                var status = _statuses.SingleOrDefault(stat => stat.Status == detail.status);
+                if (status == null)
+                {
+                    status = new MovieStatus(detail.status);
+                    _statuses.Add(status);
+                }
+
+                var movie = new Domain.Model.Movie(detail.title, detail.id, DateTime.Parse(detail.release_date), status) { Overview = detail.overview, AverageRating = (decimal?)detail.vote_average };
                 foreach (var genre in detail.genres)
                 {
                     var selectedGenre = _genres.SingleOrDefault(gen => gen.Name == genre.name);

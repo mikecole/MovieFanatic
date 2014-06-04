@@ -47,6 +47,7 @@
     <Compile Include="Model\Genre.cs" />
     <Compile Include="Model\Movie.cs" />
     <Compile Include="Model\MovieGenre.cs" />
+    <Compile Include="Model\MovieStatus.cs" />
     <Compile Include="Model\ProductionCompany.cs" />
     <Compile Include="Model\ProductionCompanyMovie.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

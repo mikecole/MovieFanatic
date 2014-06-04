@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using System.Net;
 using System.Web.Mvc;
-using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using EntityFramework.Extensions;
 using EntityFramework.Filters;
@@ -34,6 +33,50 @@ namespace MovieFanatic.Web.Controllers
             };
 
             return View(model);
+        }
+
+        public ActionResult Edit(int id)
+        {
+            var model = _dataContext.Movies
+                            .Where(movie => movie.Id == id)
+                            .Project().To<MovieDetailViewModel>()
+                            .SingleOrDefault();
+
+            if (model == null)
+            {
+                return new HttpNotFoundResult("Movie not found.");
+            }
+
+            model.Statuses = _dataContext.MovieStatuses
+                                .OrderByDescending(stat => stat.Status)
+                                .Project().To<SelectListItem>()
+                                .ToArray();
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult Edit(MovieDetailViewModel model, int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            
+            var movie = _dataContext.Movies.Find(id);
+
+            if (movie == null)
+            {
+                return new HttpNotFoundResult("Movie not found.");
+            }
+
+            movie.Title = model.Title;
+            model.Overview = model.Overview;
+            movie.Status = _dataContext.MovieStatuses.Find(model.StatusId);
+            
+            _dataContext.SaveChanges();
+
+            return RedirectToAction("Index");
         }
 
         public ActionResult Deleted()
@@ -112,8 +155,21 @@ namespace MovieFanatic.Web.Controllers
             _dataContext.Movies.Delete();
             _dataContext.Genres.Delete();
             _dataContext.ProductionCompanies.Delete();
+            _dataContext.MovieStatuses.Delete();
             _dataContext.SaveChanges();
-            ListExtensions.ForEach(movies, movie => _dataContext.Movies.Add(movie));
+            movies.ForEach(movie => _dataContext.Movies.Add(movie));
+            if (_dataContext.MovieStatuses.All(status => status.Status != "Cancelled"))
+            {
+                _dataContext.MovieStatuses.Add(new MovieStatus("Cancelled"));
+            }
+            if (_dataContext.MovieStatuses.All(status => status.Status != "Planned"))
+            {
+                _dataContext.MovieStatuses.Add(new MovieStatus("Planned"));
+            }
+            if (_dataContext.MovieStatuses.All(status => status.Status != "In Production"))
+            {
+                _dataContext.MovieStatuses.Add(new MovieStatus("In Production"));
+            }
             _dataContext.SaveChanges();
 
             return new HttpStatusCodeResult(HttpStatusCode.OK);

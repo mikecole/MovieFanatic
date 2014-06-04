@@ -38,6 +38,7 @@ namespace MovieFanatic.Data
         public DbSet<ProductionCompanyMovie> ProductionCompanyMovies { get; set; }
         public DbSet<Character> Characters { get; set; }
         public DbSet<Actor> Actors { get; set; }
+        public DbSet<MovieStatus> MovieStatuses { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -49,6 +50,7 @@ namespace MovieFanatic.Data
             modelBuilder.Configurations.Add(new ActorConfiguration());
             modelBuilder.Configurations.Add(new MovieGenreConfiguration());
             modelBuilder.Configurations.Add(new ProductionCompanyMovieConfiguration());
+            modelBuilder.Configurations.Add(new MovieStatusConfiguration());
 
             var conv = new AttributeToTableAnnotationConvention<SoftDeleteAttribute, string>(
                 "SoftDeleteColumnName",
