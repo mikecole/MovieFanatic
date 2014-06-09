@@ -94,6 +94,7 @@ namespace MovieFanatic.Web.Controllers
                 Movies = _dataContext.Movies
                                      .Where(movie => movie.IsDeleted)
                                      .Project().To<MovieIndexViewModel.Movie>()
+                                     .ToArray()
             };
 
             _dataContext.EnableFilter("SoftDelete");
