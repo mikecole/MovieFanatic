@@ -2,9 +2,7 @@
 using System.Web.Mvc;
 using AutoMapper;
 using MovieFanatic.Domain.Model;
-using MovieFanatic.Web.Controllers;
 using MovieFanatic.Web.Models;
-using StructureMap;
 
 namespace MovieFanatic.Web.Infrastructure.AutoMapper
 {
@@ -12,8 +10,6 @@ namespace MovieFanatic.Web.Infrastructure.AutoMapper
     {
         public static void Initialize()
         {
-            Mapper.Initialize(cfg => cfg.ConstructServicesUsing(ObjectFactory.GetInstance));
-
             Mapper.CreateMap<Movie, MovieIndexViewModel.Movie>()
                 .ForMember(model => model.Genres, opt => opt.MapFrom(movie => movie.MovieGenres.Select(mg => mg.Genre.Name)))
                 .ForMember(model => model.Actors, opt => opt.MapFrom(movie => movie.Characters.Select(ch => ch.Actor.Name)));
