@@ -40,9 +40,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\EntityFramework.6.1.2\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
-    <Reference Include="EntityFramework.Filters">
-      <HintPath>..\packages\EntityFramework.Filters.0.3.0.0\lib\net40\EntityFramework.Filters.dll</HintPath>
-    </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\EntityFramework.6.1.2\lib\net45\EntityFramework.SqlServer.dll</HintPath>
@@ -68,6 +65,7 @@
     <Compile Include="Extensions\Configurations\ProductionCompanyMovieConfiguration.cs" />
     <Compile Include="DataContext.cs" />
     <Compile Include="Extensions\Interceptors\SoftDeleteInterceptor.cs" />
+    <Compile Include="Extensions\Visitor\SoftDeleteQueryVisitor.cs" />
     <Compile Include="MigrationsAuthenticator.cs" />
     <Compile Include="Migrations\201405220245167_CreateMovie.cs" />
     <Compile Include="Migrations\201405220245167_CreateMovie.Designer.cs">
@@ -149,6 +147,10 @@
     <Compile Include="Migrations\201406041549494_AddedMovieStatus.Designer.cs">
       <DependentUpon>201406041549494_AddedMovieStatus.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201503040117010_AddingGlobalFilter.cs" />
+    <Compile Include="Migrations\201503040117010_AddingGlobalFilter.Designer.cs">
+      <DependentUpon>201503040117010_AddingGlobalFilter.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -226,6 +228,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201406041549494_AddedMovieStatus.resx">
       <DependentUpon>201406041549494_AddedMovieStatus.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503040117010_AddingGlobalFilter.resx">
+      <DependentUpon>201503040117010_AddingGlobalFilter.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

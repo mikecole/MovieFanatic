@@ -3,7 +3,6 @@ using System.Net;
 using System.Web.Mvc;
 using AutoMapper.QueryableExtensions;
 using EntityFramework.Extensions;
-using EntityFramework.Filters;
 using MovieFanatic.Data;
 using MovieFanatic.Domain.Model;
 using MovieFanatic.Web.Infrastructure;
@@ -86,8 +85,6 @@ namespace MovieFanatic.Web.Controllers
 
         public ActionResult Deleted()
         {
-            _dataContext.DisableFilter("SoftDelete");
-
             var model = new MovieIndexViewModel
             {
                 IsShowingDeleted = true,
@@ -96,8 +93,6 @@ namespace MovieFanatic.Web.Controllers
                                      .Project().To<MovieIndexViewModel.Movie>()
                                      .ToArray()
             };
-
-            _dataContext.EnableFilter("SoftDelete");
 
             return View("Index", model);
         }
@@ -135,8 +130,6 @@ namespace MovieFanatic.Web.Controllers
         [HttpPost]
         public ActionResult Restore(int id)
         {
-            _dataContext.DisableFilter("SoftDelete");
-
             var movie = _dataContext.Movies.Find(id);
 
             if (movie == null)
@@ -146,8 +139,6 @@ namespace MovieFanatic.Web.Controllers
 
             movie.IsDeleted = false;
             _dataContext.SaveChanges();
-
-            _dataContext.EnableFilter("SoftDelete");
 
             return RedirectToAction("Deleted");
         }
