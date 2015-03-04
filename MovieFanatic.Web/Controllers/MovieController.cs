@@ -1,5 +1,7 @@
-﻿using System.Linq;
+﻿using System.Data.Entity;
+using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 using AutoMapper.QueryableExtensions;
 using EntityFramework.Extensions;
@@ -21,54 +23,54 @@ namespace MovieFanatic.Web.Controllers
             _dataContext = dataContext;
         }
 
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
             var model = new MovieIndexViewModel
             {
-                Movies = _dataContext.Movies
+                Movies = await _dataContext.Movies
                                      .OrderByDescending(movie => movie.AverageRating)
                                      .Take(25)
                                      .Project().To<MovieIndexViewModel.Movie>()
-                                     .ToArray()
+                                     .ToListAsync()
             };
 
             return View(model);
         }
 
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> Edit(int id)
         {
-            var model = _dataContext.Movies
-                            .Where(movie => movie.Id == id)
-                            .Project().To<MovieDetailViewModel>()
-                            .SingleOrDefault();
+            var model = await _dataContext.Movies
+                                .Where(movie => movie.Id == id)
+                                .Project().To<MovieDetailViewModel>()
+                                .SingleOrDefaultAsync();
 
             if (model == null)
             {
                 return new HttpNotFoundResult("Movie not found.");
             }
 
-            model.Statuses = _dataContext.MovieStatuses
-                                .OrderByDescending(stat => stat.Status)
-                                .Project().To<SelectListItem>()
-                                .ToArray();
+            model.Statuses = await _dataContext.MovieStatuses
+                                        .OrderByDescending(stat => stat.Status)
+                                        .Project().To<SelectListItem>()
+                                        .ToListAsync();
 
             return View(model);
         }
 
         [HttpPost]
-        public ActionResult Edit(MovieDetailViewModel model, int id)
+        public async Task<ActionResult> Edit(MovieDetailViewModel model, int id)
         {
             if (!ModelState.IsValid)
             {
-                model.Statuses = _dataContext.MovieStatuses
-                                    .OrderByDescending(stat => stat.Status)
-                                    .Project().To<SelectListItem>()
-                                    .ToArray();
+                model.Statuses = await _dataContext.MovieStatuses
+                                        .OrderByDescending(stat => stat.Status)
+                                        .Project().To<SelectListItem>()
+                                        .ToListAsync();
 
                 return View(model);
             }
 
-            var movie = _dataContext.Movies.Find(id);
+            var movie = await _dataContext.Movies.FindAsync(id);
 
             if (movie == null)
             {
@@ -77,24 +79,24 @@ namespace MovieFanatic.Web.Controllers
 
             movie.Title = model.Title;
             model.Overview = model.Overview;
-            movie.Status = _dataContext.MovieStatuses.Find(model.StatusId);
+            movie.Status = await _dataContext.MovieStatuses.FindAsync(model.StatusId);
 
             _dataContext.SaveChanges();
 
             return RedirectToAction("Index");
         }
 
-        public ActionResult Deleted()
+        public async Task<ActionResult> Deleted()
         {
             _dataContext.DisableFilter("SoftDelete");
 
             var model = new MovieIndexViewModel
             {
                 IsShowingDeleted = true,
-                Movies = _dataContext.Movies
+                Movies = await _dataContext.Movies
                                      .Where(movie => movie.IsDeleted)
                                      .Project().To<MovieIndexViewModel.Movie>()
-                                     .ToArray()
+                                     .ToListAsync()
             };
 
             _dataContext.EnableFilter("SoftDelete");
@@ -103,10 +105,10 @@ namespace MovieFanatic.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
             //Run a traditional ORM delete. This recognizes interceptors but makes an additional round trip to DB...
-            var movie = _dataContext.Movies.Find(id);
+            var movie = await _dataContext.Movies.FindAsync(id);
 
             if (movie == null)
             {
@@ -114,7 +116,7 @@ namespace MovieFanatic.Web.Controllers
             }
 
             _dataContext.Movies.Remove(movie);
-            _dataContext.SaveChanges();
+            await _dataContext.SaveChangesAsync();
 
             //Or batch delete (reduces a round trip to DB). Warning: bypasses interceptors...
             //if (_dataContext.Movies.Where(movie => movie.Id == id).Delete() == 0)
@@ -133,11 +135,11 @@ namespace MovieFanatic.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult Restore(int id)
+        public async Task<ActionResult> Restore(int id)
         {
             _dataContext.DisableFilter("SoftDelete");
 
-            var movie = _dataContext.Movies.Find(id);
+            var movie = await _dataContext.Movies.FindAsync(id);
 
             if (movie == null)
             {
@@ -145,7 +147,7 @@ namespace MovieFanatic.Web.Controllers
             }
 
             movie.IsDeleted = false;
-            _dataContext.SaveChanges();
+            await _dataContext.SaveChangesAsync();
 
             _dataContext.EnableFilter("SoftDelete");
 
