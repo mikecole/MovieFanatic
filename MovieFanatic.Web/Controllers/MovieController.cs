@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using System.Web.Mvc;
 using AutoMapper.QueryableExtensions;
 using EntityFramework.Extensions;
-using EntityFramework.Filters;
 using MovieFanatic.Data;
 using MovieFanatic.Domain.Model;
 using MovieFanatic.Web.Infrastructure;
@@ -86,24 +85,6 @@ namespace MovieFanatic.Web.Controllers
             return RedirectToAction("Index");
         }
 
-        public async Task<ActionResult> Deleted()
-        {
-            _dataContext.DisableFilter("SoftDelete");
-
-            var model = new MovieIndexViewModel
-            {
-                IsShowingDeleted = true,
-                Movies = await _dataContext.Movies
-                                     .Where(movie => movie.IsDeleted)
-                                     .Project().To<MovieIndexViewModel.Movie>()
-                                     .ToListAsync()
-            };
-
-            _dataContext.EnableFilter("SoftDelete");
-
-            return View("Index", model);
-        }
-
         [HttpPost]
         public async Task<ActionResult> Delete(int id)
         {
@@ -132,26 +113,6 @@ namespace MovieFanatic.Web.Controllers
             //}
 
             return RedirectToAction("Index");
-        }
-
-        [HttpPost]
-        public async Task<ActionResult> Restore(int id)
-        {
-            _dataContext.DisableFilter("SoftDelete");
-
-            var movie = await _dataContext.Movies.FindAsync(id);
-
-            if (movie == null)
-            {
-                return new HttpNotFoundResult("Movie not found.");
-            }
-
-            movie.IsDeleted = false;
-            await _dataContext.SaveChangesAsync();
-
-            _dataContext.EnableFilter("SoftDelete");
-
-            return RedirectToAction("Deleted");
         }
 
         //This is ugly, but it's not really the point of the demo...
