@@ -1,5 +1,4 @@
 ﻿using System.Data.Entity;
-using EntityFramework.Filters;
 using MovieFanatic.Data.Extensions.Interceptors;
 
 namespace MovieFanatic.Data.Extensions.Configurations
@@ -9,7 +8,6 @@ namespace MovieFanatic.Data.Extensions.Configurations
         public EntityFrameworkConfiguration()
         {
             AddInterceptor(new SoftDeleteInterceptor());
-            AddInterceptor(new FilterInterceptor());
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Data.Entity.Core.Common.CommandTrees;
 using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder;
 using System.Data.Entity.Core.Metadata.Edm;
 using System.Data.Entity.Infrastructure.Interception;
+using MovieFanatic.Data.Extensions.Visitor;
 using MovieFanatic.Utility;
 
 namespace MovieFanatic.Data.Extensions.Interceptors
@@ -14,15 +15,15 @@ namespace MovieFanatic.Data.Extensions.Interceptors
             if (interceptionContext.OriginalResult.DataSpace == DataSpace.SSpace)
             {
                 //This was Rowan Miller's example for filtering out IsDeleteds, but I'm going to try Jimmy Bogard's method instead.
-                //var queryCommand = interceptionContext.Result as DbQueryCommandTree;
-                //if (queryCommand != null)
-                //{
-                //    var newQuery = queryCommand.Query.Accept(new SoftDeleteQueryVisitor());
-                //    interceptionContext.Result = new DbQueryCommandTree(
-                //        queryCommand.MetadataWorkspace,
-                //        queryCommand.DataSpace,
-                //        newQuery);
-                //}
+                var queryCommand = interceptionContext.Result as DbQueryCommandTree;
+                if (queryCommand != null)
+                {
+                    var newQuery = queryCommand.Query.Accept(new SoftDeleteQueryVisitor());
+                    interceptionContext.Result = new DbQueryCommandTree(
+                        queryCommand.MetadataWorkspace,
+                        queryCommand.DataSpace,
+                        newQuery);
+                }
 
                 var deleteCommand = interceptionContext.OriginalResult as DbDeleteCommandTree;
                 if (deleteCommand != null)
