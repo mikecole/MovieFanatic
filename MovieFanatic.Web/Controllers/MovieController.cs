@@ -36,6 +36,25 @@ namespace MovieFanatic.Web.Controllers
             return View(model);
         }
 
+        public async Task<ActionResult> Deleted()
+        {
+            _dataContext.SoftDeleteFilterIsActive = false;
+
+            var model = new MovieIndexViewModel
+            {
+                Movies = await _dataContext.Movies
+                                     .OrderByDescending(movie => movie.AverageRating)
+                                     .Where(movie => movie.IsDeleted)
+                                     .Take(25)
+                                     .Project().To<MovieIndexViewModel.Movie>()
+                                     .ToListAsync()
+            };
+
+            _dataContext.SoftDeleteFilterIsActive = true;
+
+            return View("Index", model);
+        }
+
         public async Task<ActionResult> Edit(int id)
         {
             var model = await _dataContext.Movies

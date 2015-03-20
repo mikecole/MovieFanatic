@@ -27,7 +27,10 @@ namespace MovieFanatic.Data
             : base("MovieFanatic")
         {
             _authenticator = authenticator;
+            SoftDeleteFilterIsActive = true;
         }
+
+        public bool SoftDeleteFilterIsActive { get; set; }
 
         public DbSet<Movie> Movies { get; set; }
         public DbSet<Genre> Genres { get; set; }
