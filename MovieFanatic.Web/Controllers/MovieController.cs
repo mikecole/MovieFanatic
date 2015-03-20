@@ -42,6 +42,7 @@ namespace MovieFanatic.Web.Controllers
 
             var model = new MovieIndexViewModel
             {
+                IsShowingDeleted = true,
                 Movies = await _dataContext.Movies
                                      .OrderByDescending(movie => movie.AverageRating)
                                      .Where(movie => movie.IsDeleted)
@@ -73,6 +74,22 @@ namespace MovieFanatic.Web.Controllers
                                         .ToListAsync();
 
             return View(model);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Restore(int id)
+        {
+            _dataContext.SoftDeleteFilterIsActive = false;
+
+            var movie = _dataContext.Movies.Find(id);
+
+            movie.IsDeleted = false;
+
+            await _dataContext.SaveChangesAsync();
+
+            _dataContext.SoftDeleteFilterIsActive = true;
+
+            return RedirectToAction("Deleted");
         }
 
         [HttpPost]
