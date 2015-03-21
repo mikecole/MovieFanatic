@@ -15,11 +15,10 @@ namespace MovieFanatic.Data.Extensions.Interceptors
         {
             if (interceptionContext.OriginalResult.DataSpace == DataSpace.SSpace)
             {
-                //This was Rowan Miller's example for filtering out IsDeleteds, but I'm going to try Jimmy Bogard's method instead.
                 var queryCommand = interceptionContext.Result as DbQueryCommandTree;
                 if (queryCommand != null)
                 {
-                    var context = (DataContext)interceptionContext.DbContexts.Last();
+                    var context = (DataContext)interceptionContext.DbContexts.Single(c => c is DataContext);
 
                     if (context.SoftDeleteFilterIsActive)
                     {
